@@ -5,13 +5,13 @@ const fs = require('fs')
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 // always place a ';' on the line before this 
 (async() => {
-  const lastIP = fs.readFileSync('ip.txt', 'utf8')
+  const lastIP = fs.readFileSync('./ip.txt', 'utf8')
   const currentIP = await fetch('http://ifconfig.me/all.json')
     .then(res => res.json())
     .then(data => data.ip_addr)
   console.log('lastIP =', lastIP)
   console.log('currentIP =', currentIP)
-  if (lastIP === currentIP) {
+  if (lastIP.trim() === currentIP) {
     console.log('up to date')
     return
   }
@@ -21,7 +21,7 @@ const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
       console.log(err)
       return
     }
-    fs.readFileSync('ip.txt', 'utf8')
+    fs.readFileSync('./ip.txt', 'utf8')
     console.log('ip updated')
     client.messages
       .create({
