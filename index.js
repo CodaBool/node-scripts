@@ -5,7 +5,7 @@ const fs = require('fs')
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 // always place a ';' on the line before this 
 (async() => {
-  const lastIP = fs.readFileSync('./ip.txt', 'utf8')
+  const lastIP = fs.readFileSync('/home/codabool/node-scripts/ip.txt', 'utf8')
   const currentIP = await fetch('http://ifconfig.me/all.json')
     .then(res => res.json())
     .then(data => data.ip_addr)
@@ -16,12 +16,12 @@ const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
     return
   }
   console.log('ip has changed')
-  fs.writeFile('readme.txt', currentIP, (err) => {
+  fs.writeFile('/home/codabool/node-scripts/ip.txt', currentIP, (err) => {
     if (err) {
       console.log(err)
       return
     }
-    fs.readFileSync('./ip.txt', 'utf8')
+    // fs.readFileSync('./ip.txt', 'utf8')
     console.log('ip updated')
     client.messages
       .create({
